@@ -41,3 +41,27 @@ ecommerce-store/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+
+## 📌 Project Information
+
+**Project Name:** ShopEase - E-Commerce Store
+
+**Project Type:** Full Stack Development Internship Task
+
+**Backend:** Django
+
+**Database:** SQLite
+
+**Frontend:** HTML, CSS, JavaScript
+
+---
+
+## 👨‍💻 Author
+
+**Ranjitha Ilapanda**
+
+---
+
+## 📄 License
+
+This project was developed for educational and internship purposes.

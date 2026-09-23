@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ product.name }} - ShopEase</title>
+
+    <link rel="stylesheet"
+          href="{% static 'store/style.css' %}">
+
+    <style>
+
+        .detail-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .product-detail {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .detail-info {
+            padding: 20px;
+        }
+
+        .detail-info h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .detail-description {
+            color: #6b7280;
+            line-height: 1.7;
+            margin: 20px 0;
+        }
+
+        .detail-price {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .detail-stock {
+            color: #16a34a;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .add-cart {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .add-cart:hover {
+            background: #1d4ed8;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #e5e7eb;
+            color: #111827;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-button:hover {
+            background: #d1d5db;
+        }
+
+        @media (max-width: 700px) {
+
+            .product-detail {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .detail-image {
+                height: 300px;
+            }
+
+            .detail-info h1 {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🛍️ ShopEase
+        </div>
+
+        <div class="nav-right">
+
+            <a href="/">
+                Home
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'order_history' %}">
+                    My Orders
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+                <a href="{% url 'register' %}">
+                    Register
+                </a>
+
+            {% endif %}
+
+            <a class="cart-link"
+               href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- PRODUCT DETAILS -->
+
+    <div class="detail-container">
+
+        <div class="product-detail">
+
+
+            <!-- IMAGE -->
+
+            <div>
+
+                {% if product.image %}
+
+                    <img
+                        class="detail-image"
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}">
+
+                {% else %}
+
+                    <div class="detail-image"
+                         style="display:flex;
+                                align-items:center;
+                                justify-content:center;">
+
+                        No Image Available
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="detail-info">
+
+                <h1>
+                    {{ product.name }}
+                </h1>
+
+                <p class="detail-description">
+
+                    {{ product.description }}
+
+                </p>
+
+                <p class="detail-price">
+
+                    ₹{{ product.price }}
+
+                </p>
+
+                <p class="detail-stock">
+
+                    ✓ {{ product.stock }} items available
+
+                </p>
+
+
+                <a class="add-cart"
+                   href="{% url 'add_to_cart' product.id %}">
+
+                    🛒 Add to Cart
+
+                </a>
+
+
+                <a class="back-button"
+                   href="/">
+
+                    ← Back
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 ShopEase. All Rights Reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

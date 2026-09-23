@@ -1,0 +1,590 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Shopping Cart - ShopEase</title>
+
+    <link rel="stylesheet"
+          href="{% static 'store/style.css' %}">
+
+    <style>
+
+        .cart-page {
+            min-height: 75vh;
+            padding: 50px 6%;
+        }
+
+        .cart-title {
+            text-align: center;
+            font-size: 34px;
+            color: #111827;
+            margin-bottom: 35px;
+            animation: titleAppear 0.7s ease;
+        }
+
+        @keyframes titleAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .cart-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 18px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.07);
+
+            animation: itemAppear 0.6s ease both;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        @keyframes itemAppear {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cart-image {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #f8fafc;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-item:hover .cart-image {
+            transform: scale(1.08);
+        }
+
+        .cart-info {
+            flex: 1;
+        }
+
+        .cart-info h3 {
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .cart-price {
+            color: #2563eb;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .quantity-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-button {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 7px;
+
+            background: #eff6ff;
+            color: #2563eb;
+
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+
+            transition: all 0.25s ease;
+        }
+
+        .quantity-button:hover {
+            background: #2563eb;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .quantity {
+            min-width: 35px;
+            text-align: center;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .item-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111827;
+            min-width: 110px;
+            text-align: right;
+        }
+
+        .remove-button {
+            color: #dc2626;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 8px;
+            display: inline-block;
+            transition: 0.3s ease;
+        }
+
+        .remove-button:hover {
+            color: #991b1b;
+            transform: translateX(3px);
+        }
+
+        .cart-summary {
+            margin-top: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.08);
+
+            animation: summaryAppear 0.8s ease;
+        }
+
+        @keyframes summaryAppear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .total-text {
+            font-size: 22px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .total-price {
+            color: #2563eb;
+        }
+
+        .checkout-button {
+            padding: 13px 24px;
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: all 0.3s ease;
+        }
+
+        .checkout-button:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .continue-shopping {
+            display: block;
+            width: fit-content;
+            margin: 25px auto 0;
+
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.3s ease;
+        }
+
+        .continue-shopping:hover {
+            transform: translateX(-5px);
+            color: #7c3aed;
+        }
+
+        /* EMPTY CART */
+
+        .empty-cart {
+            max-width: 600px;
+            margin: 40px auto;
+
+            background: white;
+
+            padding: 55px 30px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.08);
+
+            animation: emptyAppear 0.8s ease;
+        }
+
+        @keyframes emptyAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .empty-icon {
+            font-size: 65px;
+            margin-bottom: 15px;
+
+            animation:
+                cartFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes cartFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .empty-cart h2 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .empty-cart p {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        .shop-now {
+            display: inline-block;
+
+            padding: 13px 25px;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: all 0.3s ease;
+        }
+
+        .shop-now:hover {
+            background: #1d4ed8;
+            transform: translateY(-4px);
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        @media (max-width: 700px) {
+
+            .cart-page {
+                padding: 35px 5%;
+            }
+
+            .cart-item {
+                flex-wrap: wrap;
+            }
+
+            .cart-image {
+                width: 90px;
+                height: 90px;
+            }
+
+            .item-total {
+                width: 100%;
+                text-align: left;
+            }
+
+            .cart-summary {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🛍️ ShopEase
+        </div>
+
+        <div class="nav-right">
+
+            <a href="/">
+                Home
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'order_history' %}">
+                    My Orders
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <section class="cart-page">
+
+        <h1 class="cart-title">
+            🛒 Your Shopping Cart
+        </h1>
+
+
+        {% if products %}
+
+        <div class="cart-container">
+
+            {% for item in products %}
+
+            <div class="cart-item"
+                 style="animation-delay: {{ forloop.counter0 }}00ms;">
+
+                {% if item.product.image %}
+
+                    <img
+                        src="{{ item.product.image.url }}"
+                        alt="{{ item.product.name }}"
+                        class="cart-image">
+
+                {% else %}
+
+                    <div class="cart-image">
+                        No Image
+                    </div>
+
+                {% endif %}
+
+
+                <div class="cart-info">
+
+                    <h3>
+                        {{ item.product.name }}
+                    </h3>
+
+                    <p class="cart-price">
+                        ₹{{ item.product.price }}
+                    </p>
+
+
+                    <div class="quantity-area">
+
+                        <a
+                            href="{% url 'decrease_quantity' item.product.id %}"
+                            class="quantity-button">
+
+                            −
+
+                        </a>
+
+
+                        <span class="quantity">
+                            {{ item.quantity }}
+                        </span>
+
+
+                        <a
+                            href="{% url 'increase_quantity' item.product.id %}"
+                            class="quantity-button">
+
+                            +
+
+                        </a>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'remove_from_cart' item.product.id %}"
+                        class="remove-button">
+
+                        🗑 Remove
+
+                    </a>
+
+                </div>
+
+
+                <div class="item-total">
+
+                    ₹{{ item.item_total }}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+            <!-- SUMMARY -->
+
+            <div class="cart-summary">
+
+                <div class="total-text">
+
+                    Total:
+
+                    <span class="total-price">
+                        ₹{{ total }}
+                    </span>
+
+                </div>
+
+
+                <a
+                    href="{% url 'checkout' %}"
+                    class="checkout-button">
+
+                    Proceed to Checkout →
+
+                </a>
+
+            </div>
+
+
+            <a
+                href="/"
+                class="continue-shopping">
+
+                ← Continue Shopping
+
+            </a>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- EMPTY CART -->
+
+        <div class="empty-cart">
+
+            <div class="empty-icon">
+                🛒
+            </div>
+
+            <h2>
+                Your Cart is Empty
+            </h2>
+
+            <p>
+                Looks like you haven't added anything
+                to your cart yet.
+            </p>
+
+            <a
+                href="/"
+                class="shop-now">
+
+                Start Shopping
+
+            </a>
+
+        </div>
+
+
+        {% endif %}
+
+    </section>
+
+
+    <footer class="footer">
+
+        <p>
+            © 2026 ShopEase. All Rights Reserved.
+        </p>
+
+        <p>
+            Your trusted online shopping destination.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

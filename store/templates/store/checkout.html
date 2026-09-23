@@ -1,0 +1,707 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Checkout - ShopEase
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'store/style.css' %}">
+
+
+    <style>
+
+        /* =========================
+           CHECKOUT PAGE
+        ========================= */
+
+        .checkout-page {
+
+            min-height: 75vh;
+
+            padding: 60px 6%;
+
+        }
+
+
+        .checkout-container {
+
+            max-width: 850px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.08);
+
+            animation:
+                checkoutAppear 0.8s ease;
+
+        }
+
+
+        @keyframes checkoutAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(40px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =========================
+           CHECKOUT ICON
+        ========================= */
+
+        .checkout-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin:
+                0 auto 20px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+            animation:
+                iconFloat 2s
+                ease-in-out infinite;
+
+        }
+
+
+        @keyframes iconFloat {
+
+            0%, 100% {
+
+                transform:
+                    translateY(0);
+
+            }
+
+            50% {
+
+                transform:
+                    translateY(-7px);
+
+            }
+
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .checkout-title {
+
+            text-align: center;
+
+            font-size: 32px;
+
+            margin-bottom: 10px;
+
+            color: #111827;
+
+        }
+
+
+        .checkout-subtitle {
+
+            text-align: center;
+
+            color: #6b7280;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        .error-message {
+
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            padding: 14px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            animation:
+                errorAppear 0.5s ease;
+
+        }
+
+
+        @keyframes errorAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-10px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+
+            margin-bottom: 22px;
+
+            animation:
+                fieldAppear 0.6s ease both;
+
+        }
+
+
+        .form-group:nth-child(1) {
+
+            animation-delay:
+                0.1s;
+
+        }
+
+
+        .form-group:nth-child(2) {
+
+            animation-delay:
+                0.2s;
+
+        }
+
+
+        .form-group:nth-child(3) {
+
+            animation-delay:
+                0.3s;
+
+        }
+
+
+        @keyframes fieldAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateX(-20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateX(0);
+
+            }
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #374151;
+
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                all 0.3s ease;
+
+        }
+
+
+        .form-group textarea {
+
+            height: 110px;
+
+            resize: vertical;
+
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.12
+                );
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        /* =========================
+           PLACE ORDER
+        ========================= */
+
+        .place-order {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 15px;
+
+            margin-top: 10px;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                all 0.3s ease;
+
+        }
+
+
+        .place-order:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    0.3
+                );
+
+        }
+
+
+        .place-order:active {
+
+            transform:
+                scale(0.98);
+
+        }
+
+
+        /* =========================
+           BACK TO CART
+        ========================= */
+
+        .back-cart {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            transition:
+                all 0.3s ease;
+
+        }
+
+
+        .back-cart:hover {
+
+            color: #7c3aed;
+
+            transform:
+                translateX(-4px);
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .checkout-page {
+
+                padding:
+                    30px 5%;
+
+            }
+
+
+            .checkout-container {
+
+                padding: 25px;
+
+            }
+
+
+            .checkout-title {
+
+                font-size: 26px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+
+            🛍️ ShopEase
+
+        </div>
+
+
+        <div class="nav-right">
+
+
+            <a href="/">
+
+                Home
+
+            </a>
+
+
+            <a href="{% url 'cart' %}">
+
+                🛒 Cart
+
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'order_history' %}">
+
+                    My Orders
+
+                </a>
+
+
+                <a href="{% url 'logout' %}">
+
+                    Logout
+
+                </a>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </nav>
+
+
+
+    <!-- =========================
+         CHECKOUT
+    ========================= -->
+
+    <section class="checkout-page">
+
+
+        <div class="checkout-container">
+
+
+            <!-- ICON -->
+
+            <div class="checkout-icon">
+
+                🛒
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1 class="checkout-title">
+
+                Checkout
+
+            </h1>
+
+
+            <p class="checkout-subtitle">
+
+                Enter your details to place your order
+
+            </p>
+
+
+
+            <!-- ERROR MESSAGE -->
+
+            {% if error %}
+
+                <div class="error-message">
+
+                    ⚠️ {{ error }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- FORM -->
+
+            <form method="POST">
+
+
+                {% csrf_token %}
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Full Name
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Delivery Address
+
+                    </label>
+
+
+                    <textarea
+                        name="address"
+                        placeholder="Enter your complete delivery address"
+                        required></textarea>
+
+                </div>
+
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Phone Number
+
+                    </label>
+
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="place-order">
+
+                    ✓ Place Order
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- BACK -->
+
+            <a
+                href="{% url 'cart' %}"
+                class="back-cart">
+
+                ← Back to Cart
+
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="footer">
+
+
+        <p>
+
+            © 2026 ShopEase.
+            All Rights Reserved.
+
+        </p>
+
+
+        <p>
+
+            Your trusted online shopping destination.
+
+        </p>
+
+
+    </footer>
+
+
+</body>
+
+</html>

@@ -40,7 +40,7 @@ The application allows users to browse products, view product details, add produ
 ## 📂 Project Structure
 
 ```text
-ecommerce-store/
+codealpha-ecommerce/
 │
 ├── ecommerce/
 │   ├── __init__.py
